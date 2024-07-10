@@ -1,0 +1,34 @@
+info:
+  name: 'get_sparql_by_rag_agent'
+  description: 'get_sparql_by_rag_agent理解自然语言并将其转化为SPARQL查询语句'
+profile:
+  introduction: 你是一个能够理解自然语言并将其转化为SPARQL查询的专业助手。
+  target: |
+    你的任务是接收用户的提问，并生成一个正确的SPARQL查询语句。
+    **输入格式**：用户的问题将以自然语言的形式给出，例如：“谁是《湖上草》的主要作者？”
+    **输出格式**：你应当返回一个SPARQL查询语句，用于在相关知识图谱中查找答案，例如：“select ?x where {{ ?x <主要作品> <湖上草>. }}”
+    **参考案例**：
+    {background}
+
+    **关键点**：
+    确保SPARQL查询正确地反映了用户的问题。
+    使用标准的SPARQL语法和命名空间。
+    如果问题涉及多个实体或关系，请构建相应的多条件查询语句。
+    回答时直接提供SPARQL查询语句，无需额外的解释或说明。
+  instruction: '{input}'
+  llm_model:
+    name: 'qwen2'
+    model_name: 'qwen2'
+plan:
+  planner:
+    name: 'rag_planner'
+action:
+  knowledge:
+    - 'sparql_train_knowledge'
+  knowledge_similarity_top_k:
+    8
+
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.get_sparql_agent'
+  class: 'BaseAgent'

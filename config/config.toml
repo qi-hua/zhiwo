@@ -1,0 +1,49 @@
+# config.toml
+[BASE_INFO]
+# The app name will be applied to all processes including agent service integration.
+appname = 'zhiwo'
+
+[CORE_PACKAGE]
+# Perform a full component scan and registration for all the paths under this list.
+default = ['zhiwo.app']
+# Scan and register agent components for all paths under this list, with priority over the default.
+# agent = ['zhiwo.app.core.agent']
+# # Scan and register agent components for all paths under this list, with priority over the default.
+# knowledge = ['zhiwo.app.core.knowledge']
+# # Scan and register knowledge components for all paths under this list, with priority over the default.
+# llm = ['zhiwo.app.core.llm']
+# # Scan and register llm components for all paths under this list, with priority over the default.
+# planner = ['zhiwo.app.core.planner']
+# # Scan and register planner components for all paths under this list, with priority over the default.
+# tool = ['zhiwo.app.core.tool']
+# # Scan and register memory components for all paths under this list, with priority over the default.
+# memory = ['zhiwo.app.core.memory']
+# # Scan and register service components for all paths under this list, with priority over the default.
+# service = ['zhiwo.app.core.service']
+# # Scan and register prompt components for all paths under this list, with priority over the default.
+# prompt = []
+# Further information is omitted here.
+
+[SUB_CONFIG_PATH]
+# Custom key file path, use to save your own secret key like open ai or sth else. REMEMBER TO ADD IT TO .gitignore.
+custom_key_path = './custom_key.toml'
+# Log config file path, an absolute path or a relative path based on the dir where the current config file is located.
+log_config_path = './log_config.toml'
+# Further information is omitted here.
+
+
+[GUNICORN]
+# Use gunicorn as http server when activate is 'true', or only use flask.
+activate = 'true'
+# Gunicorn config file path, an absolute path or a relative path based on the dir where the current config file is located.
+gunicorn_config_path = './gunicorn_config.toml'
+
+
+[GRPC]
+activate = 'false'
+max_workers = 10
+server_port = 50051
+
+[MONITOR]
+activate = false
+dir = './monitor'

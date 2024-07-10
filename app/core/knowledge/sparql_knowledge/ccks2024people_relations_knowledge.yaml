@@ -1,0 +1,6 @@
+name: 'ccks2024people_relations_knowledge'
+description: 'ccks2024people_relations_knowledge'
+metadata:
+  type: 'KNOWLEDGE'
+  module: 'zhiwo.app.core.knowledge.sparql_knowledge'
+  class: 'PeopleRelationsKnowledge'

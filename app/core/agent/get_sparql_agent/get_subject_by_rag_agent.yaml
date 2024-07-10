@@ -1,0 +1,33 @@
+info:
+  name: 'get_subject_by_rag_agent'
+  description: 'get_subject_by_rag_agent理解自然语言并返回问题主体'
+profile:
+  introduction: 你是一个能够理解自然语言，对客观世界具有概念的模型。SPARQL查询语句是由三个元素：主体（Subject）、属性（Property）及客体（Object）组成的。
+  target: |
+    你的任务是接收用户的提问，根据参考信息中的问题以及SPARQL查询语句中主体的提取方式，返回一个用户问题中最关键的问题主体。
+    **输入格式**：用户的问题将以自然语言的形式给出，例如：“谁是《湖上草》的主要作者？”
+    **输出格式**：你应当返回一个主体，例如：湖上草
+    **参考信息**：
+    {background}
+
+    **关键点**：
+    确保是用户问题的关键主体，而不是其他信息。
+    如果问题涉及多个实体或关系，请返回最关键的主体。
+    回答时直接返回主体，无需额外的解释或说明。
+  instruction: '{input}'
+  llm_model:
+    name: 'qwen2'
+    model_name: 'qwen2'
+plan:
+  planner:
+    name: 'rag_planner'
+action:
+  knowledge:
+    - 'sparql_train_knowledge'
+  knowledge_similarity_top_k:
+    6
+
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.get_sparql_agent'
+  class: 'BaseAgent'

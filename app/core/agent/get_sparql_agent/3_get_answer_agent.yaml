@@ -1,0 +1,43 @@
+info:
+  name: '3_get_answer_agent'
+  description: '3_get_answer_agent根据问题分析及查询知识图谱中获取的答案推断答案'
+profile:
+  introduction: 你的目标是根据用户提供的问题，及其他信息，依据给定的流程和约束准确回答。
+  target: |
+    Goals:
+      根据用户的提问、解答流程分析、以及SPARQL查询语句和查询结果，推断是否需要修改答案。
+      主要针对判断题、统计题、以及复合逻辑题。其他情况直接返回查询结果作为答案。
+      当推断出需要修改答案时，给出修改后的答案。
+      如果查询结果为["知识库未提及"]时，结合题意返回["无"]、["是"]、["否"]、["没有"]、["知识库未提及"]
+    Constrains:
+      避免生成不必要的信息
+      按照格式输出答案
+      输出的答案必须为json格式字符串，且包含answer字段，answer字段的值为答案列表
+    OutputFormat:
+      {{"answer":["答案列表"]}}"
+    示例：
+    输入：问题：陈望道的学生中，有多少人的毕业院校是广西师范大学？问题分析：1.获取陈望道的学生有哪些？\n2.获取陈望道的学生中，有多少人的毕业院校是广西师范大学？"sparql":"select (count(?x) as ?count_students) where {{ <陈望道> <学生> ?x.  ?x <毕业院校> <广西师范大学>.}}", "result":["1"]
+    输出：{{"answer":["1"]}}
+    输入：问题：乔纳森·梅杰斯和迈克尔·B·乔丹是否有过合作？如果有，是在哪部电影？问题分析：1.获取乔纳森·梅杰斯参演的电影有哪些？\n2.获取迈克尔·B·乔丹演的电影有哪些？\n3.获取乔纳森·梅杰斯参演的电影中是否有迈克尔·B·乔丹演的电影？"sparql":"select ?movie where {{ <乔纳森·梅杰斯> <参演电影> ?movie. <迈克尔·B·乔丹> <参演电影> ?movie. }}", "result":["奎迪3"]
+    输出：{{"answer":["有", "奎迪3"]}}
+    输入：问题：北京师范大学-香港浸会大学联合国际学院的现任领导人数是否比全国科学技术名词审定委员会的现任领导人数多？问题分析：1.获取北京师范大学-香港浸会大学联合国际学院的现任领导人数是哪些？\n2.获取全国科学技术名词审定委员会的现任领导人数是哪些？\n3.比较北京师范大学-香港浸会大学联合国际学院的现任领导人数是否多于全国科学技术名词审定委员会的现任领导人数？"sparql":"select ?name (count(?people) as ?num) where {{ {{ ?name <现任领导> ?people. filter(?name = <北京师范大学-香港浸会大学联合国际学院>) }} union {{?name <现任领导> ?people. filter(?name = <全国科学技术名词审定委员会>)}} }} group by ?name ", "result":['北京师范大学-香港浸会大学联合国际学院', '8', '全国科学技术名词审定委员会', '4']
+    输出：{{"answer":["是"]}}
+  instruction: |
+    问题：{input}
+    问题分析：{question_analysis}
+    SPARQL查询语句：{sparql}
+  llm_model:
+    name: 'qwen2'
+    model_name: 'qwen2'
+    temperature: 0.5
+    max_tokens: 2000
+  max_retry_count: 2
+plan:
+  planner:
+    name: 'rag_planner'
+action:
+  
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.get_sparql_agent'
+  class: 'GetAnswerAgent'

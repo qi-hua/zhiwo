@@ -1,0 +1,1 @@
+curl http://127.0.0.1:8080/service_run -X POST --header "Content-Type: application/json;charset=UTF-8" -d '{"service_id":"get_sparql_service", "params":{"input":"中国的首都是哪里？"}}'

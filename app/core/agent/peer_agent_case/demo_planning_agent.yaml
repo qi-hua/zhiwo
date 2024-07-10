@@ -1,0 +1,17 @@
+info:
+  name: 'demo_planning_agent'
+  description: 'demo planning agent'
+profile:
+  prompt_version: demo_planning_agent.cn
+  llm_model:
+    name: 'qwen2'
+    temperature: 0.5
+plan:
+  planner:
+    name: 'planning_planner'
+memory:
+  name: ''
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.default.planning_agent.planning_agent'
+  class: 'PlanningAgent'

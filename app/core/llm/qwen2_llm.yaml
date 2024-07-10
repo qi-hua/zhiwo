@@ -1,0 +1,9 @@
+name: 'qwen2'
+description: 'demo qwen llm with spi'
+model_name: 'qwen2'
+max_tokens: 2000
+max_retries: 2
+metadata:
+  type: 'LLM'
+  module: 'agentuniverse.llm.default.default_openai_llm'
+  class: 'DefaultOpenAILLM'

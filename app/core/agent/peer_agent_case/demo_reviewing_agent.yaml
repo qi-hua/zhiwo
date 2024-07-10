@@ -1,0 +1,16 @@
+info:
+  name: 'demo_reviewing_agent'
+  description: 'demo reviewing agent'
+profile:
+  llm_model:
+    name: 'qwen2'
+    temperature: 0.5
+plan:
+  planner:
+    name: 'reviewing_planner'
+memory:
+  name: ''
+metadata:
+  type: 'AGENT'
+  module: 'agentuniverse.agent.default.reviewing_agent.reviewing_agent'
+  class: 'ReviewingAgent'

@@ -1,0 +1,6 @@
+name: 'sparql_train_knowledge'
+description: 'sparql train knowledge'
+metadata:
+  type: 'KNOWLEDGE'
+  module: 'zhiwo.app.core.knowledge.sparql_knowledge'
+  class: 'SparqlTrainKnowledge'

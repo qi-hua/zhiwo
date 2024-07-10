@@ -1,0 +1,5 @@
+name: 'get_subject_by_rag_service'
+description: 'get subject service of get subject agent'
+agent: 'get_subject_by_rag_agent'
+metadata:
+  type: 'SERVICE'

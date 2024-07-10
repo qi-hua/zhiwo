@@ -1,0 +1,21 @@
+{
+    "message": null,
+    "request_id": "dc2b9ce713fa41b1a174c23e711e8b0b",
+    "result": {
+        "chat_history": [
+            {
+                "content": "中国的国歌是什么？",
+                "type": "human"
+            },
+            {
+                "content": "SELECT ?song WHERE { ?song <性质> <国歌> . ?song <所属国家> <中国>}",
+                "type": "ai"
+            }
+        ],
+        "background": "",
+        "date": "2024-06-25",
+        "input": "中国的国歌是什么？",
+        "output": "SELECT ?song WHERE { ?song <性质> <国歌> . ?song <所属国家> <中国>}"
+    },
+    "success": true
+}

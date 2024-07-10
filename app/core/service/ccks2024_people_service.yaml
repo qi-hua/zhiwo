@@ -1,0 +1,5 @@
+name: 'ccks2024_people_service'
+description: 'ccks2024_people_service of 0__ccks2024_people_agent'
+agent: '0__ccks2024_people_agent'
+metadata:
+  type: 'SERVICE'

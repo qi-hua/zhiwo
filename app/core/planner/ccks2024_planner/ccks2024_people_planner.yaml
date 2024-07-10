@@ -1,0 +1,6 @@
+name: 'ccks2024_people_planner'
+description: 'ccks2024_people_planner'
+metadata:
+  type: 'PLANNER'
+  module: 'zhiwo.app.core.planner.ccks2024_planner.ccks2024_people_planner'
+  class: 'Ccks2024PeoplePlanner'
