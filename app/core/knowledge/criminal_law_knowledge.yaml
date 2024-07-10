@@ -1,6 +1,0 @@
-name: 'criminal_law_knowledge'
-description: 'criminal law knowledge'
-metadata:
-  type: 'KNOWLEDGE'
-  module: 'zhiwo.app.core.knowledge.criminal_law_knowledge'
-  class: 'CriminalLawKnowledge'

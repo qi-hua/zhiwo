@@ -18,7 +18,6 @@ from agentuniverse.base.util.logging.logging_util import LOGGER
 from ..ollama_embedding import OllamaEmbedding
 from ..jsonl_reader import JsonlReader
 
-from ..minirbt256_embedding import Minirbt256Embedding
 from ..text_reader import TextReader
 
 
@@ -86,41 +85,9 @@ class SparqlTrainKnowledge(Knowledge):
         # similarity_top_k = 5
         # if 'similarity_top_k' in kwargs:
         #     similarity_top_k = kwargs['similarity_top_k']
-        LOGGER.info("____________--------------------",kwargs)
+        # LOGGER.info("____________--------------------",kwargs)
 
         # query = Query(text=kwargs['text'], similarity_top_k=similarity_top_k)
         query = Query(**kwargs)
         return self.store.query(query)
-    
-
-class PeopleRelationsKnowledge(Knowledge):
-    """ccks2024people_relations_knowledge"""
-    def __init__(self, **kwargs):
-        super().__init__(**kwargs)
-        # self.store = ChromaStore(
-        #     collection_name="ccks2024people_relations_store",
-        #     # persist_path="../../DB/ccks2024people_relations.db",
-        #     persist_path="/home/qihua/study/zhiwo/DB/ccks2024people_relations.db",
-        #     embedding_model=Minirbt256Embedding(),
-        #     dimensions=256)
-        self.store = ChromaStore(
-            collection_name="sparql_train_store2",
-            # persist_path="../../DB/sparql_train.db",
-            persist_path="/home/qihua/study/zhiwo/DB/ccks2024people_relations2.db",
-            embedding_model=OllamaEmbedding(
-                embedding_model_name='shaw/dmeta-embedding-zh'
-            ),
-            dimensions=768)
-        self.reader = TextReader()
-        # Initialize the knowledge
-        self.insert_knowledge()
- 
-    def insert_knowledge(self, **kwargs) -> None:
-        """
-        Load criminal law pdf and save into vector database.
-        """
-        # doc_list = self.reader.load_data('https://www.sfu.ca/~poitras/BUFFET.pdf')
-        ccks2024people_relations_docs = self.reader.load_data('/home/qihua/study/zhiwo/app/resources/ccks2024people_relations.txt')
-        self.store.insert_documents(ccks2024people_relations_docs)
-
     

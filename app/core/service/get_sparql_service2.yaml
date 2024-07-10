@@ -1,5 +1,0 @@
-name: 'get_sparql_service2'
-description: 'get_sparql service of get_sparql agent'
-agent: 'get_sparql_agent2'
-metadata:
-  type: 'SERVICE'

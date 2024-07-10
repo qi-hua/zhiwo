@@ -1,1 +1,4 @@
 agentuniverse
+
+pydantic
+tomli
