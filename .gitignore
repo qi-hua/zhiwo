@@ -174,4 +174,9 @@ cython_debug/
 
 *.pyc
 
+log/
+logs/
+.logs/
 custom_key.toml
+
+*.zip

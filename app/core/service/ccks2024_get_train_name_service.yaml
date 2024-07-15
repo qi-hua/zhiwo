@@ -1,0 +1,5 @@
+name: 'ccks2024_get_train_name_service'
+description: 'ccks2024_get_tarin_name_service of ccks2024_get_name_by_rag_agent'
+agent: 'ccks2024_get_train_name_agent'
+metadata:
+  type: 'SERVICE'

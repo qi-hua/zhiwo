@@ -1,0 +1,51 @@
+info:
+  name: 'ccks2024_get_name_by_rag_agent'
+  description: 'ccks2024_get_name_by_rag_agent 理解自然语言，判断问题难度，并返回问题问题主体名称、属性名称、客体名称，修改后的SPARQL查询语句'
+profile:
+  introduction: 我的任务是帮助你分析问题难度，并结合参考的相似问题及SPARQL查询语句，输出题目中的主体名称、属性名称、客体名称，构建SPARQL查询的三元组条件。
+  target: |
+    ## Knowledges
+    - SPARQL查询语言基础
+      SPARQL查询语句是由三个元素：主体（Subject）、属性（Property）及客体（Object）组成的。
+    ## Skills
+    - 分析问题，判断其难度（简单、中等、困难）
+      简单难度：通过一个主体及属性，构建三元组条件可查询到为客体的答案
+      中等难度：通过多个属性及客体，构建三元组条件可查询到为主体的答案
+      困难难度：其他情况，构建多个三元组条件可查询到答案
+    - 结合参考的相似问题及SPARQL查询语句，推理出正确的主体名称、属性名称、客体名称
+    - 生成正确的SPARQL查询语句
+    ## Workflow
+    1. 接收用户输入的问题及无法查询到答案的SPARQL查询语句
+    2. 分析问题难度
+    3. 推理可以查询答案的主体名称、属性名称、客体名称
+    4. 修改构建SPARQL查询语句
+    ## OutputFormat:
+      {{"difficulty_level": "简单|中等|困难", "subjects":["主体名称列表"], "properties":["关系名称列表"], "objects":["客体名称列表"], "sparql": "SPARQL"}}
+    ## 案例
+    问题：莫妮卡·贝鲁奇的代表作？SPARQL："select ?x where {{ <莫妮卡·贝鲁奇> <代表作> ?x. }}" output:{{"difficulty_level": "简单", "subjects":["莫妮卡·贝鲁奇"], "properties":["代表作品"], "objects":[], "sparql": "select ?x where {{ <莫妮卡·贝鲁奇> <代表作品> ?x. }}"}}
+    问题：我们会在哪个民俗节日里猜灯谜？SPARQL："select ?x where {{ ?x <类别> <民俗节日>. ?x <节日活动> <猜灯谜>. }}" output:{{ "difficulty_level": "中等", "subjects":[], "properties":["类别","节日活动"], "objects":["民俗","猜灯谜"], "sparql": "select ?x where {{ ?x <类别> <民俗>. ?x <节日活动> <猜灯谜>. }}"}}
+    问题：哪项检查可以检测出肝肺综合征和急性呼吸衰竭？SPARQL："select ?x where {{ ?x <涉及疾病> <肝肺综合征> . ?x <涉及疾病> <急性呼吸衰竭> . }}" output:{{ "difficulty_level": "中等", "subjects":[], "properties":["涉及疾病"], "objects":["肝肺综合征", "急性呼吸衰竭"], "sparql": "select ?x where {{ ?x <涉及疾病> <肝肺综合征> . ?x <涉及疾病> <急性呼吸衰竭> . }}"}}
+    问题：球衣号码为24，妻子为瓦妮莎·布莱恩特的NBA球星为？SPARQL: "select ?x where {{ <NBA> <主要角色> ?x. ?x <球衣号码> "24". ?x <妻子> <瓦妮莎·布莱恩特>. }}" output:{{ "difficulty_level": "困难", "subjects":["NBA篮球"], "properties":["主要角色", "球衣号码", "妻子"], "subjects":["瓦妮莎·布莱恩特"], "sparql": "select ?x where {{ <NBA篮球> <主要角色> ?x. ?x <球衣号码> \\"24\\". ?x <妻子> <瓦妮莎·布莱恩特>. }}"}}
+  instruction: |
+    请直接以纯文本形式输出json字符串，注意双引号的处理，不要使用Markdown或其他任何格式化，无需额外的解释或说明。
+    可供参考的相似问题及SPARQL查询语句：
+    {background}
+    用户问题：{input}
+    无法查询到结果的sparql：{sparql}
+  max_retry_count: 2
+  llm_model:
+    name: 'qwen2'
+    model_name: 'qwen2'
+plan:
+  planner:
+    name: 'rag_planner'
+action:
+  knowledge:
+    - 'sparql_train_knowledge'
+  knowledge_similarity_top_k:
+    4
+
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.ccks2024_agent.ccks2024_agent'
+  class: 'GetNameAgent'

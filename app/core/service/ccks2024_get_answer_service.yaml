@@ -1,0 +1,5 @@
+name: 'ccks2024_get_answer_service'
+description: 'ccks2024_get_answer_service of ccks2024_get_answer_agent'
+agent: 'ccks2024_get_answer_agent'
+metadata:
+  type: 'SERVICE'

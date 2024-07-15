@@ -75,7 +75,7 @@ class Ccks2024PeoplePlanner(Planner):
         Returns:
             dict: The planner result.
         """
-        result: dict = dict()
+        # result: dict = dict()
 
         retry_count = planner_config.get('retry_count', default_retry_count)
 

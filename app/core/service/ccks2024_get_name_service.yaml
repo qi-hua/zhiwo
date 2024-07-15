@@ -1,0 +1,5 @@
+name: 'ccks2024_get_name_service'
+description: 'ccks2024_people_service of ccks2024_get_name_by_rag_agent'
+agent: 'ccks2024_get_name_by_rag_agent'
+metadata:
+  type: 'SERVICE'
