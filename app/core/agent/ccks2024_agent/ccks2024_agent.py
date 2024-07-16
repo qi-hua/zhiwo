@@ -28,9 +28,10 @@ class BaseAgent(Agent):
                 result = parse_and_check_json_markdown(res, self.output_keys())
             except:
                 # 使用正则表达式进行替换 
+                # 将^^<http://www.w3.org/2001/XMLSchema#float> 进行删除
+                res = re.sub(r"\^\^\s*<[^>]+>", r'\\"\1\\"', res)
                 # 匹配双引号后有'.'的情况（sparql语句中）
-                pattern = r"\"([^\"]+)\"(?=\s*\.)"
-                res = re.sub(pattern, r'\\"\1\\"', res)
+                res = re.sub(r"\"([^\"]+)\"(?=\s*\.)", r'\\"\1\\"', res)
                 result = parse_and_check_json_markdown(res, self.output_keys())
             planner_result.update(result)
             return planner_result
@@ -70,13 +71,14 @@ class BaseAgent(Agent):
     
 class GetNameAgent(BaseAgent):
     def input_keys(self) -> list[str]:
-        return ['input','sparql']
+        return ['input', 'sparql']
     
     def output_keys(self) -> list[str]:
         return ['difficulty_level', 'subjects', 'properties', 'objects', 'sparql']
+    
 class GetTrainNameAgent(BaseAgent):
     def input_keys(self) -> list[str]:
-        return ['input','sparql']
+        return ['input', 'sparql']
     
     def output_keys(self) -> list[str]:
         return ['difficulty_level', 'subjects', 'properties', 'objects', 'entities']
@@ -92,10 +94,18 @@ class GetNameAndSparqlAgent(BaseAgent):
 
 class ReplaceNameAgent(BaseAgent):
     def input_keys(self) -> list[str]:
-        return ['input','sparql','background','difficulty_level','subjects', 'properties', 'objects','subjects_choices','properties_choices','objects_choices']
+        return ['input', 'sparql', 'background', 'difficulty_level', 'subjects', 'properties', 'objects', 'subjects_choices', 'properties_choices', 'objects_choices']
     
     def output_keys(self) -> list[str]:
-        return ['best_subjects', 'best_properties', 'best_objects', 'changed_sparql']
+        return ['best_subjects', 'best_properties', 'best_objects', 'changed_sparql', 'entities']
+
+class ReplaceNameAgainAgent(BaseAgent):
+    # ccks2024_replace_name_again_agent
+    def input_keys(self) -> list[str]:
+        return ['input', 'sparql', 'background', 'difficulty_level', 'subjects', 'properties', 'objects', 'subjects_choices', 'properties_choices', 'objects_choices', 'error_names']
+    
+    def output_keys(self) -> list[str]:
+        return ['best_subjects', 'best_properties', 'best_objects', 'changed_sparql', 'entities']
 
 class GetAnswerAgent(BaseAgent):
     def input_keys(self) -> list[str]:
