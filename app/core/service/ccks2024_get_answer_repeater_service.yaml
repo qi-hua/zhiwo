@@ -1,0 +1,5 @@
+name: 'ccks2024_get_answer_repeater_service'
+description: 'ccks2024_get_answer_repeater_service of ccks2024_get_answer_repeater_agent'
+agent: 'ccks2024_get_answer_repeater_agent'
+metadata:
+  type: 'SERVICE'

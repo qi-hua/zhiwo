@@ -1,0 +1,5 @@
+name: 'ccks2024_replace_name_service'
+description: 'ccks2024_replace_name_service of ccks2024_replace_name_agent'
+agent: 'ccks2024_replace_name_agent'
+metadata:
+  type: 'SERVICE'

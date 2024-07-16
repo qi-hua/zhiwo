@@ -15,7 +15,7 @@ from pathlib import Path
 
 from agentuniverse.base.util.logging.logging_util import LOGGER
 
-from ..ollama_embedding import OllamaEmbedding
+from ..infinity_embedding import InfinityEmbedding
 from ..jsonl_reader import JsonlReader
 
 from ..text_reader import TextReader
@@ -48,8 +48,8 @@ class SparqlTrainKnowledge(Knowledge):
             collection_name="sparql_train_store",
             # persist_path="../../DB/sparql_train.db",
             persist_path="/home/qihua/study/zhiwo/DB/sparql_train.db",
-            embedding_model=OllamaEmbedding(
-                embedding_model_name='shaw/dmeta-embedding-zh'
+            embedding_model=InfinityEmbedding(
+                embedding_model_name='Dmeta-embedding-zh'
             ),
             dimensions=768)
         self.reader = JsonlReader()
@@ -69,12 +69,6 @@ class SparqlTrainKnowledge(Knowledge):
             doc.id = doc.metadata['id']
             del(doc.metadata['answer'])
 
-            # self.store.collection.add(
-            #     documents=[doc.text],
-            #     metadatas=[doc.metadata],
-            #     embeddings=[doc.embedding],
-            #     ids=[doc.id]
-            # )
             self.store.insert_documents([doc])
 
     def query_knowledge(self, **kwargs) -> List[Document]:

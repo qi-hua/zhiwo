@@ -1,0 +1,59 @@
+info:
+  name: 'ccks2024_replace_name_agent'
+  description: 'ccks2024_replace_name_agent 分析理解问题，结合已知信息选择合适的主体名称、属性名称、客体名称'
+profile:
+  introduction: 你的任务是结合可供参考的相似问题及SPARQL查询语句，分析理解用户的问题，对无法查询到结果的sparql，选择最符合题意的主体名称、属性名称、客体名称，修改SPARQL查询语句。
+  target: |
+    ## 注意
+    最合适的主体名称、属性名称、客体名称，必须来源于参考的SPARQL查询语句、或提供的对应的choices的名称中。
+    如果subjects、properties、objects存在多个，请对应每个名称选择最合适的主体名称、属性名称、客体名称。
+    尽量参考已知相似问题的SPARQL查询语句中有的三元组名称。
+    给出修改后的SPARQL查询语句。
+    返回用于查询三元组信息以便查找答案的实体名称（主体或客体名称）
+    当有多个实体名称可供查询时，丢弃会查询到大量相关三元组的实体名称，例如：演员_（职业）,美国_（美利坚合众国）,总经理 等
+    请直接以纯文本形式输出json字符串，不要使用Markdown或其他任何格式化，无需额外的解释或说明。
+    ## OutputFormat:
+      {{"best_subjects": ["主体名称列表"], "best_properties": ["属性名称列表"], "best_objects": ["客体名称列表"] "changed_sparql": "修改后的SPARQL", "entities": ["应该用于查询三元组信息以便查找答案的实体名称（主体或客体名称）列表"]}}
+    ## 案例
+    可供参考的相似问题及SPARQL查询语句:
+      问题:龙卷风的英文名是什么？  SPARQL查询语句:"select ?x where {{ <龙卷风_（一种自然天气现象）> <外文名> ?x. }}"
+      问题:科学家牛顿的英文名是？  SPARQL查询语句:"select ?x where {{ <牛顿_（艾萨克·牛顿）> <外文名> ?x . }}"
+    问题:龙卷风的英文名是什么？
+    SPARQL:"select ?x where {{ <龙卷风> <英文名> ?x. }}"
+    subjects:["龙卷风"]
+    properties: ["英文名"]
+    objects: []
+    subjects_choices:旋风_（自然现象）、洛阳龙卷风、龙卷风作战、龙卷风卡、天震_（大气灾害）、热带风暴_（气象灾害）、台湾龙卷风、黑色龙卷风、火龙_（火焰龙卷风）、柏林龙卷风、风_（自然现象）、新闻龙卷风、龙卷风_（一种自然天气现象）、闪电_（自然现象）、狂怒龙卷风、飓风_（自然灾害）、尼日尔龙卷风、疯狂龙卷风、龙卷风时刻、追击龙卷风、资本龙卷风、龙之风暴_（天文现象）、双龙卷风、龙卷风女王
+    properties_choices:英语名称、英文名a、英文全名、英文又名、英文名稱、英文姓名、英文名称、目英文名、英文名、英文名字、作家英文名、\u200b英文名称、英文名英文、\u200b英语名、英语名字
+    objects_choices:''
+    OUTPUT: {{"best_subjects": ["龙卷风_（一种自然天气现象）"], "best_properties": ["外文名"], "best_objects": [], "changed_sparql": "select ?x where {{ <龙卷风_（一种自然天气现象）> <外文名> ?x. }}", "entities": ["龙卷风_（一种自然天气现象）"]}}
+
+  instruction: |
+    可供参考的相似问题及SPARQL查询语句:
+    {background}
+    请对下述问题进行理解，并返回最合适的主体名称、属性名称、客体名称:
+    用户问题:{input}
+    无法查询到结果的sparql:{sparql}
+    其中的subjects:{subjects}
+    其中的properties:{properties}
+    其中的objects: {objects}
+    subjects_choices:{subjects_choices}
+    properties_choices:{properties_choices}
+    objects_choices: {objects_choices}
+  max_retry_count: 2
+  llm_model:
+    name: 'qwen2'
+    model_name: 'qwen2'
+plan:
+  planner:
+    name: 'rag_planner'
+# action:
+#   knowledge:
+#     - 'sparql_train_knowledge'
+#   knowledge_similarity_top_k:
+#     3
+
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.ccks2024_agent.ccks2024_agent'
+  class: 'ReplaceNameAgent'
