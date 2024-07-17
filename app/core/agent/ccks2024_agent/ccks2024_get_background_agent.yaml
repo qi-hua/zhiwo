@@ -1,0 +1,17 @@
+info:
+  name: 'ccks2024_get_background_agent'
+  description: 'ccks2024_get_background_agent 获取相似题目及sparql查询语句'
+
+plan:
+  planner:
+    name: 'rag_planner'
+action:
+  knowledge:
+    - 'sparql_train_knowledge'
+  knowledge_similarity_top_k:
+    4
+
+metadata:
+  type: 'AGENT'
+  module: 'zhiwo.app.core.agent.ccks2024_agent.ccks2024_agent'
+  class: 'GetBackgroundAgent'

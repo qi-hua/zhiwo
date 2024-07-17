@@ -6,9 +6,44 @@ from agentuniverse.agent.input_object import InputObject
 from agentuniverse.agent.output_object import OutputObject
 from agentuniverse.base.util.logging.logging_util import LOGGER
 
+from agentuniverse.agent.action.knowledge.knowledge_manager import KnowledgeManager
+
 from langchain_core.output_parsers.json import parse_and_check_json_markdown
 
 
+class GetBackgroundAgent(Agent):
+    def input_keys(self) -> list[str]:
+        return ['input']
+    
+    def output_keys(self) -> list[str]:
+        return ['background']
+    
+    def parse_input(self, input_object: InputObject, agent_input: dict) -> dict:
+        return agent_input
+    
+    def parse_result(self, planner_result: dict) -> dict:
+        return planner_result
+    
+    def run(self, **kwargs) -> OutputObject:
+        """Agent instance running entry.
+
+        Returns:
+            OutputObject: Agent execution result
+        """
+        self.input_check(kwargs)
+        agent_input = dict()
+        agent_input.update(kwargs)
+        knowledge = KnowledgeManager().get_instance_obj(self.agent_model.action.get('knowledge',['sparql_train_knowledge'])[0])
+        query_input = {
+            'query_str': kwargs.get(self.input_keys()[0]),
+            'similarity_top_k': self.agent_model.action.get('knowledge_similarity_top_k', 3)
+        }
+        agent_input['background'] = '\n'.join([doc.text for doc in knowledge.query_knowledge(**query_input)])
+
+        output_object = OutputObject(agent_input)
+        
+        return output_object
+    
 class BaseAgent(Agent):
     def input_keys(self) -> list[str]:
         return ['input']

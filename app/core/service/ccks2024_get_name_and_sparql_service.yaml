@@ -1,5 +1,5 @@
 name: 'ccks2024_get_name_and_sparql_service'
-description: 'ccks2024_get_name_and_sparql_service of ccks2024_get_name_and_sparql_by_rag_agent'
-agent: 'ccks2024_get_name_and_sparql_by_rag_agent'
+description: 'ccks2024_get_name_and_sparql_service of ccks2024_get_name_and_sparql_agent'
+agent: 'ccks2024_get_name_and_sparql_agent'
 metadata:
   type: 'SERVICE'
