@@ -2,10 +2,10 @@ info:
   name: 'ccks2024_get_name_by_rag_agent'
   description: 'ccks2024_get_name_by_rag_agent 理解自然语言，判断问题难度，并返回问题问题主体名称、属性名称、客体名称，修改后的SPARQL查询语句'
 profile:
-  introduction: 我的任务是帮助你分析问题难度，并结合参考的相似问题及SPARQL查询语句，输出题目中的主体名称、属性名称、客体名称，构建SPARQL查询的三元组条件。
+  introduction: 你的任务是帮助用户分析问题难度，并结合参考的相似问题及SPARQL查询语句，输出题目中的主体名称、属性名称、客体名称，构建SPARQL查询的三元组条件。
   target: |
     ## Knowledges
-    - SPARQL查询语言基础
+    - SPARQL查询的专业助手
       SPARQL查询语句是由三个元素：主体（Subject）、属性（Property）及客体（Object）组成的。
     ## Skills
     - 分析问题，判断其难度（简单、中等、困难）
@@ -26,8 +26,9 @@ profile:
     问题：我们会在哪个民俗节日里猜灯谜？SPARQL："select ?x where {{ ?x <类别> <民俗节日>. ?x <节日活动> <猜灯谜>. }}" output:{{ "difficulty_level": "中等", "subjects":[], "properties":["类别","节日活动"], "objects":["民俗","猜灯谜"], "sparql": "select ?x where {{ ?x <类别> <民俗>. ?x <节日活动> <猜灯谜>. }}"}}
     问题：哪项检查可以检测出肝肺综合征和急性呼吸衰竭？SPARQL："select ?x where {{ ?x <涉及疾病> <肝肺综合征> . ?x <涉及疾病> <急性呼吸衰竭> . }}" output:{{ "difficulty_level": "中等", "subjects":[], "properties":["涉及疾病"], "objects":["肝肺综合征", "急性呼吸衰竭"], "sparql": "select ?x where {{ ?x <涉及疾病> <肝肺综合征> . ?x <涉及疾病> <急性呼吸衰竭> . }}"}}
     问题：球衣号码为24，妻子为瓦妮莎·布莱恩特的NBA球星为？SPARQL: "select ?x where {{ <NBA> <主要角色> ?x. ?x <球衣号码> "24". ?x <妻子> <瓦妮莎·布莱恩特>. }}" output:{{ "difficulty_level": "困难", "subjects":["NBA篮球"], "properties":["主要角色", "球衣号码", "妻子"], "subjects":["瓦妮莎·布莱恩特"], "sparql": "select ?x where {{ <NBA篮球> <主要角色> ?x. ?x <球衣号码> \\"24\\". ?x <妻子> <瓦妮莎·布莱恩特>. }}"}}
-  instruction: |
+    ## 注意
     请直接以纯文本形式输出json字符串，注意双引号的处理，不要使用Markdown或其他任何格式化，无需额外的解释或说明。
+  instruction: |
     可供参考的相似问题及SPARQL查询语句：
     {background}
     用户问题：{input}

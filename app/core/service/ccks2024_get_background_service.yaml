@@ -1,0 +1,5 @@
+name: 'ccks2024_get_background_service'
+description: 'ccks2024_get_background_service of ccks2024_get_background_agent'
+agent: 'ccks2024_get_background_agent'
+metadata:
+  type: 'SERVICE'
