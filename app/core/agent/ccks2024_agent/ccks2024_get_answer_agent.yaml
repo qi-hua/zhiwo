@@ -16,7 +16,7 @@ profile:
      - 请根据参考信息作答，严禁使用常识进行推理
      - 请直接以纯文本形式输出json字符串，不要使用Markdown或其他任何格式化。
     ## OutputFormat:
-    {{"analysis": "多步流程分析", "summarize": "简要的结果说明，用于后续推理参考", "need_further_inference": bool, "next_subjects": ["需要进一步获取三元组信息的主体名称"], "answers": ["答案列表"]}}
+    {{"analysis": "问题多步流程拆解分析", "summarize": "根据目前的参考信息进行推理并说明，或用于后续推理参考", "need_further_inference": bool, "next_subjects": ["需要进一步获取三元组信息的主体名称"], "answers": ["答案列表"]}}
     ## 案例
     问题：莫妮卡·贝鲁奇的代表作？
     sparql: "select ?y where {{ <莫妮卡·贝鲁奇> <代表作品> ?y. }}"

@@ -22,16 +22,16 @@ profile:
     ## OutputFormat:
       {{"difficulty_level": "简单|中等|困难", "subjects":["主体名称列表"], "properties":["关系名称列表"], "objects":["客体名称列表"], "sparql": "SPARQL"}}
     ## 案例
-    问题：莫妮卡·贝鲁奇的代表作？ output:{{"difficulty_level": "简单", "subjects":["莫妮卡·贝鲁奇"], "properties":["代表作品"], "objects":[], SPARQL:"select ?x where {{ <莫妮卡·贝鲁奇> <代表作品> ?x. }}"}}
+    问题：莫妮卡·贝鲁奇的代表作？ output:{{"difficulty_level": "简单", "subjects":["莫妮卡·贝鲁奇"], "properties":["代表作品"], "objects":[], "sparql": "select ?x where {{ <莫妮卡·贝鲁奇> <代表作品> ?x. }}"}}
     问题：我们会在哪个民俗节日里猜灯谜？ output:{{ "difficulty_level": "中等", "subjects":[], "properties":["类别","节日活动"], "objects":["民俗","猜灯谜"], "sparql": "select ?x where {{ ?x <类别> <民俗>. ?x <节日活动> <猜灯谜>. }}"}}
     问题：哪项检查可以检测出肝肺综合征和急性呼吸衰竭？ output:{{ "difficulty_level": "中等", "subjects":[], "properties":["涉及疾病"], "objects":["肝肺综合征", "急性呼吸衰竭"], "sparql": "select ?x where {{ ?x <涉及疾病> <肝肺综合征> . ?x <涉及疾病> <急性呼吸衰竭> . }}"}}
     问题：球衣号码为24，妻子为瓦妮莎·布莱恩特的NBA球星为？ output:{{ "difficulty_level": "困难", "subjects":["NBA篮球"], "properties":["主要角色", "球衣号码", "妻子"], "subjects":["瓦妮莎·布莱恩特"], "sparql": "select ?x where {{ <NBA篮球> <主要角色> ?x. ?x <球衣号码> \\"24\\". ?x <妻子> <瓦妮莎·布莱恩特>. }}"}}
     ## 注意
+    请勿对未知答案的类别作为名称返回，如作品、金属、角色等。
     请直接以纯文本形式输出json字符串，注意双引号的处理，不要使用Markdown或其他任何格式化，无需额外的解释或说明。
   instruction: |
     可供参考的相似问题及SPARQL查询语句：
     {background}
-    请对下述问题进行理解，并返回问题难度、主体名称、属性名称、客体名称、SPARQL查询语句：
     用户问题：{input}
   max_retry_count: 3
   llm_model:
@@ -40,7 +40,6 @@ profile:
 plan:
   planner:
     name: 'rag_planner'
-
 action:
   knowledge:
     - 'sparql_train_knowledge'
